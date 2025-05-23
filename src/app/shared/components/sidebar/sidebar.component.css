@@ -1,0 +1,14 @@
+.sidebar-link {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  .sidebar-link:hover {
+    background-color: #65758D;
+    color: white !important;
+  }
+  
+  .sidebar-link:hover i,
+  .sidebar-link:hover span {
+    color: white !important;
+  }

@@ -1,0 +1,43 @@
+<div class="d-flex vh-100">
+  <!-- Sección izquierda: Bienvenida -->
+  <div class="w-50 d-flex flex-column justify-content-center align-items-center text-white p-5" style="background: linear-gradient(to right, #2B4C7E, #3F5474);">
+    <h2 class="fw-bold mb-3">¡Bienvenido!</h2>
+    <p class="text-center">¿No tienes una cuenta?</p>
+    <a [routerLink]="['/register']" class="btn btn-outline-light mt-2">Regístrate</a>
+  </div>
+
+  <!-- Sección derecha: Login -->
+  <div class="w-50 d-flex flex-column justify-content-center align-items-center bg-white">
+    <div class="w-75">
+      <h2 class="fw-bold mb-4 text-center">
+        <span style="color: #2B4C7E;">SQL</span><span style="color: #000;">ineage</span>
+      </h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div class="mb-4">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input id="email" type="email" formControlName="email" class="form-control form-control-lg" style="background-color: #f0f0f0;" />
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')" class="text-danger small">Campo obligatorio</div>
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')" class="text-danger small">Correo inválido</div>
+          <div *ngIf="loginForm.get('email')?.hasError('notFound')" class="text-danger small">Correo no registrado</div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+          <label for="password" class="form-label">Contraseña</label>
+          <input id="password" type="password" formControlName="password" class="form-control form-control-lg" style="background-color: #f0f0f0;" />
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')" class="text-danger small">Campo obligatorio</div>
+          <div *ngIf="loginForm.get('password')?.hasError('incorrect')" class="text-danger small">Contraseña incorrecta</div>
+        </div>
+
+        <!-- Botón de inicio de sesión -->
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary btn-lg" style="background: linear-gradient(to right, #2B4C7E, #3F5474); border: none;">
+            Iniciar sesión
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

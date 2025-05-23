@@ -1,0 +1,96 @@
+<div class="container-fluid p-4">
+  <ul class="nav nav-tabs align-items-center">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'codigo'" (click)="setActiveTab('codigo')">Código</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'archivo'" (click)="setActiveTab('archivo')">Archivo</a>
+    </li>
+    <li class="nav-item me-5" *ngIf="activeTab === 'codigo'">
+      <button type="button" (click)="validateAndSendQuery()" class="btn btn-primary ms-2">
+        <i class="bi bi-search me-1"></i> Analizar
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3">
+    <!-- Pestaña Código -->
+    <div class="tab-pane fade" [class.show]="activeTab === 'codigo'" [class.active]="activeTab === 'codigo'">
+      <form id="query-form">
+        <h6 for="sql-query">Ingrese su código SQL:</h6>
+        <div class="d-flex position-relative" style="border: 1px solid #ced4da; height: 50vh; overflow: hidden;">
+          <pre #lineNumbers id="line-numbers"
+            style="margin: 0; padding: 0.75rem 0.5rem; text-align: right; background: #e9ecef; color: #999; font-family: monospace; border-right: 1px solid #ced4da; user-select: none; overflow: hidden; min-width: 2ch; white-space: pre-wrap; line-height: 1.5em;"></pre>
+          <textarea [(ngModel)]="query" #sqlQuery id="sql-query" name="sql-query" class="form-control"
+            rows="12" (input)="updateLineNumbers()" (keyup)="updateLineNumbers()" (keydown)="updateLineNumbers()"
+            (scroll)="onScroll()"
+            style="resize: none; font-family: monospace; background-color: #f8f9fa; white-space: pre; border: none; width: 100%; height: 100%; overflow-y: auto; line-height: 1.5em; padding-left: 0.5rem;"></textarea>
+        </div>
+
+        <div *ngIf="cargandoCodigo" class="mt-4 d-flex align-items-center gap-2">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Procesando...</span>
+          </div>
+          <span class="text-success fw-semibold">Procesando consulta...</span>
+        </div>
+
+        <div *ngIf="successMessage && !cargandoCodigo" class="alert alert-success mt-3 d-flex align-items-center">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          <span>{{ successMessage }}</span>
+        </div>
+
+        <div *ngIf="errorMessage && !cargandoCodigo" class="alert alert-danger mt-3 d-flex align-items-center">
+          <i class="bi bi-x-circle-fill me-2"></i>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <div *ngIf="invalidQueryMessage && !cargandoCodigo" class="alert alert-warning mt-3 d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <span>{{ invalidQueryMessage }}</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Pestaña Archivo -->
+    <div class="tab-pane fade" [class.show]="activeTab === 'archivo'" [class.active]="activeTab === 'archivo'">
+      <div class="d-flex flex-column align-items-center justify-content-center" style="height: 60vh;">
+        <i class="bi bi-upload fs-1" [class.text-muted]="cargandoArchivo" style="cursor: pointer;" (click)="triggerFileInput()"></i>
+        <span class="mt-2" [class.text-muted]="cargandoArchivo" style="cursor: pointer;" (click)="triggerFileInput()">
+          Subir archivo SQL
+        </span>
+        <input type="file" id="file-input" accept=".sql" (change)="onFileSelected($event)" hidden>
+
+        <div *ngIf="archivoInvalido" class="alert alert-danger mt-3 w-75 text-center d-flex align-items-center justify-content-center">
+          <i class="bi bi-exclamation-circle me-2"></i>
+          <span>Solo se permiten archivos con extensión <strong>.sql</strong></span>
+        </div>
+
+        <div *ngIf="cargandoArchivo" class="mt-4 text-center">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Procesando...</span>
+          </div>
+          <div class="mt-2 text-success fw-semibold">Procesando consulta...</div>
+        </div>
+        <!-- Archivo inválido: Vacío -->
+        <div *ngIf="invalidQueryMessage && !cargandoArchivo" class="alert alert-warning mt-3 w-75 text-center">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ invalidQueryMessage }}
+        </div>
+
+        <!-- Error de procesamiento del archivo -->
+        <div *ngIf="errorMessage && !query && !invalidQueryMessage" class="alert alert-danger mt-3 w-75 text-center">
+          <i class="bi bi-x-circle-fill me-2"></i> {{ errorMessage }}
+        </div>
+
+        <div *ngIf="successMessage && !query" class="alert alert-success mt-3 w-75 text-center d-flex align-items-center justify-content-center">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          <span>{{ successMessage }}</span>
+        </div>
+
+        <div *ngIf="errorMessage && !query" class="alert alert-danger mt-3 w-75 text-center d-flex align-items-center justify-content-center">
+          <i class="bi bi-x-circle-fill me-2"></i>
+          <span>{{ errorMessage }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

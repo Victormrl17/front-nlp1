@@ -1,0 +1,19 @@
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar .dropdown-menu {
+    min-width: 200px;
+  }
+  
+  .navbar .dropdown-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .sidebar a:hover {
+    background-color: #c0c7d1;
+  }
+  

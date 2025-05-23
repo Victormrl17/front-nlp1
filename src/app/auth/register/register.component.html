@@ -1,0 +1,51 @@
+<div class="d-flex vh-100" style="background-color: #F8F9F9;">
+  <div class="w-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="container bg-white p-5 border" style="width:40%; height: auto; margin:auto;">
+      <h1 class="text-center mb-4">
+        <span style="color: #2B4C7E;">SQL</span><span style="color: #000;">ineage</span>
+      </h1>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre de usuario</label>
+          <input id="username" type="text" formControlName="username" class="form-control" />
+          <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.hasError('required')"
+               class="text-danger small">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('username')?.hasError('exists')" class="text-danger small">
+            Elija otro nombre de usuario
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input id="email" type="email" formControlName="email" class="form-control" />
+          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')"
+               class="text-danger small">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')"
+               class="text-danger small">Ingresa un correo electrónico válido</div>
+          <div *ngIf="registerForm.get('email')?.hasError('exists')" class="text-danger small">
+            Ingrese otro correo
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input id="password" type="password" formControlName="password" class="form-control" />
+          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')"
+               class="text-danger small">Campo obligatorio</div>
+          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('minlength')"
+               class="text-danger small">Mínimo 6 caracteres</div>
+        </div>
+        <div *ngIf="serverError" class="alert alert-danger">{{ serverError }}</div>
+        <button type="submit" class="btn btn-dark w-100">Crear cuenta</button>
+      </form>
+      <hr class="my-4">
+      <div class="text-center">
+        ¿Ya tienes cuenta? <a [routerLink]="['/login']" style="color:#0A5CB8">Iniciar sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
