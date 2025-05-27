@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class HistorialService {
-  private API_URL = 'http://127.0.0.1:5000/api';
+  private API_URL = 'https://front-nlp1-9e15.vercel.app/';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
