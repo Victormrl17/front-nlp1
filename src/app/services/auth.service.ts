@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:5000/api';
+  private baseUrl = 'https://front-nlp1-9e15.vercel.app/';
 
   constructor(private http: HttpClient, private router: Router) {}
 
