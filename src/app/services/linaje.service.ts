@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class LinajeService {
   // Usa la URL pública de Render. Cámbiala si ya tienes tu backend desplegado en otro dominio:
-  private apiUrl = 'http://127.0.0.1:5000/api';  // REEMPLAZA por tu URL real
+  private apiUrl = 'https://backendsql-9fa2.onrender.com/api';  // REEMPLAZA por tu URL real
 
   constructor(
     private http: HttpClient,
